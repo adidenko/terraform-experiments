@@ -1,5 +1,6 @@
 variable "image" {
-  default = "coreos-stable-1409-5-0-v20170623"
+//  default = "coreos-stable-1409-5-0-v20170623"
+  default = "centos-cloud/centos-7"
 }
 
 variable "type" {
@@ -18,14 +19,18 @@ variable "region" {
   default = "europe-west2-a"
 }
 
+variable "ssh_user" {
+  default = "slivarez"
+}
+
 variable "public_key_path" {
   description = "Path to file containing public key"
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "~/.ssh/google_compute_engine.pub"
 }
 
 variable "private_key_path" {
   description = "Path to file containing private key"
-  default     = "~/.ssh/id_rsa"
+  default     = "~/.ssh/google_compute_engine"
 }
 
 variable "install_script_src_path" {

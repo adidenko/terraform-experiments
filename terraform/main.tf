@@ -13,6 +13,7 @@ resource "google_compute_instance" "test" {
 
   disk {
     image = "${var.image}"
+    size  = 50
   }
 
   network_interface {
@@ -24,7 +25,7 @@ resource "google_compute_instance" "test" {
   }
 
   metadata {
-    ssh-keys = "root:${file("${var.public_key_path}")}"
+    ssh-keys = "${var.ssh_user}:${file("${var.public_key_path}")}"
   }
 
   // Provisioning
@@ -34,7 +35,7 @@ resource "google_compute_instance" "test" {
 
     connection {
       type        = "ssh"
-      user        = "root"
+      user        = "${var.ssh_user}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
@@ -43,7 +44,7 @@ resource "google_compute_instance" "test" {
   provisioner "remote-exec" {
     connection {
       type        = "ssh"
-      user        = "root"
+      user        = "${var.ssh_user}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
