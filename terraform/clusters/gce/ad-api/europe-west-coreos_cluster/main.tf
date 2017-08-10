@@ -11,7 +11,8 @@ module "compute" {
   type                    = "${var.type}"
   # Pass region as zone
   zone                    = "${var.region}"
-  image                   = "${var.image}"
+  image_project           = "${var.image_project}"
+  image_family            = "${var.image_family}"
   project                 = "${var.project}"
   ssh_user                = "${var.ssh_user}"
   public_key_path         = "${var.public_key_path}"

@@ -8,7 +8,9 @@ variable "instances" {
 
 variable "name_prefix" {}
 
-variable "image" {}
+variable "image_project" {}
+
+variable "image_family" {}
 
 variable "project" {}
 
@@ -19,6 +21,10 @@ variable "ssh_user" {}
 variable "public_key_path" {}
 
 variable "private_key_path" {}
+
+variable "use_ignition" {
+  default     = false
+}
 
 variable "install_script_src_path" {
   description = "Path to install script within this repository"

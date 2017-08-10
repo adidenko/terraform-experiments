@@ -2,8 +2,12 @@ variable "cluster_name" {
   default = "coreos-test"
 }
 
-variable "image" {
-  default = "coreos-cloud/coreos-alpha"
+variable "image_project" {
+  default = "coreos-cloud"
+}
+
+variable "image_family" {
+  default = "coreos-alpha"
 }
 
 variable "type" {

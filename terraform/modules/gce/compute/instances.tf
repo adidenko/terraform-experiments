@@ -1,3 +1,7 @@
+module "ignition" {
+  source = "../../coreos/ignition"
+}
+
 resource "google_compute_instance" "node" {
   name         = "${var.name_prefix}-${count.index + 1}"
   count        = "${var.instances}"
@@ -6,7 +10,7 @@ resource "google_compute_instance" "node" {
 
   boot_disk {
     initialize_params {
-      image = "${var.image}"
+      image = "${var.image_project}/${var.image_family}"
       size  = 50
     }
   }
@@ -20,7 +24,8 @@ resource "google_compute_instance" "node" {
   }
 
   metadata {
-    ssh-keys = "${var.ssh_user}:${file("${var.public_key_path}")}"
+    ssh-keys  = "${var.ssh_user}:${file("${var.public_key_path}")}"
+    user-data = "${var.image_project == "coreos-cloud" ? module.ignition.config : "" }"
   }
 
   // Provisioning

@@ -2,9 +2,12 @@ variable "cluster_name" {
   default = "centos-test"
 }
 
-variable "image" {
-//  default = "coreos-stable-1409-5-0-v20170623"
-  default = "centos-cloud/centos-7"
+variable "image_project" {
+  default = "centos-cloud"
+}
+
+variable "image_family" {
+  default = "centos-7"
 }
 
 variable "type" {
