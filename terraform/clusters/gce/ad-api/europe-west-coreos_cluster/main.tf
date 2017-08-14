@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "eu-bucket-01"
+    region = "eu-central-1"
+    key    = "terraform/europe-west-coreos_cluster"
+  }
+}
+
 provider "google" {
   credentials = "${file("account.json")}"
   project     = "${var.project}"
