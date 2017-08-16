@@ -1,8 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "eu-bucket-01"
-    region = "eu-central-1"
-    key    = "terraform/europe-west-coreos_cluster"
+    bucket         = "eu-bucket-01"
+    region         = "eu-central-1"
+    key            = "terraform/europe-west-coreos_cluster"
+    dynamodb_table = "tf-europe-west-coreos_cluster"
   }
 }
 
