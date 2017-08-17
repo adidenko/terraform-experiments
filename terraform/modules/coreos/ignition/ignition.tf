@@ -1,6 +1,6 @@
 data "ignition_systemd_unit" "example" {
-  name = "example.service"
-  content = "[Service]\nType=oneshot\nExecStart=/usr/bin/echo Hello World\n\n[Install]\nWantedBy=multi-user.target"
+  name = "${var.service_name}"
+  content = "${var.service_content}"
 }
 
 data "ignition_config" "example" {

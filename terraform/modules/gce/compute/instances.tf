@@ -51,7 +51,7 @@ resource "google_compute_instance" "node" {
 
     inline = [
       "chmod +x ${var.install_script_dest_path}",
-      "sudo ${var.install_script_dest_path} ${count.index}",
+      "sudo ${var.install_script_dest_path} ${count.index} ${var.vault_ip} ${var.vault_int_dns} ${var.vault_ext_dns}",
     ]
   }
 }
