@@ -1,34 +1,18 @@
-variable "cluster_name" {
-  default = "centos-test"
-}
+variable "cluster_name" {}
 
-variable "image_project" {
-  default = "centos-cloud"
-}
+variable "image_project" {}
 
-variable "image_family" {
-  default = "centos-7"
-}
+variable "image_family" {}
 
-variable "type" {
-  default = "f1-micro"
-}
+variable "type" {}
 
-variable "instances" {
-  default = 3
-}
+variable "instances" {}
 
-variable "project" {
-  default = "ad-api-167408"
-}
+variable "project" {}
 
-variable "region" {
-  default = "europe-west2-a"
-}
+variable "region" {}
 
-variable "ssh_user" {
-  default = "slivarez"
-}
+variable "ssh_user" {}
 
 variable "public_key_path" {
   description = "Path to file containing public key"
