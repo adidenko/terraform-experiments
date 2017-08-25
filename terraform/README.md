@@ -1,5 +1,16 @@
 # Terraform experiments repo
 
+## Environment variables
+
+AWS and GCE credentials should be exported as environment variables before
+running `terraform` or `terragrunt` commands:
+
+```
+export AWS_ACCESS_KEY_ID=<ID>
+export AWS_SECRET_ACCESS_KEY=<KEY>
+export GOOGLE_CREDENTIALS=`cat account.json`
+```
+
 ## Structure
 
 * `modules` - reusable modules
