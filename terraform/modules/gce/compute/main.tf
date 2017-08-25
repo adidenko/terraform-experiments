@@ -1,49 +1,57 @@
-variable "type" {
-  default = "f1-micro"
+module "ignition" {
+  source = "../../coreos/ignition"
 }
 
-variable "instances" {
-  default = 1
-}
+resource "google_compute_instance" "node" {
+  name         = "${var.name_prefix}-${count.index + 1}"
+  count        = "${var.instances}"
+  machine_type = "${var.type}"
+  zone         = "${var.zone}"
 
-variable "name_prefix" {}
+  boot_disk {
+    initialize_params {
+      image = "${var.image_project}/${var.image_family}"
+      size  = 50
+    }
+  }
 
-variable "image_project" {}
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP - leaving this block empty will generate a new external
+      // IP and assign it to the machine
+    }
+  }
 
-variable "image_family" {}
+  metadata {
+    ssh-keys  = "${var.ssh_user}:${file("${var.public_key_path}")}"
+    user-data = "${var.image_project == "coreos-cloud" ? module.ignition.config : "" }"
+  }
 
-variable "project" {}
+  // Provisioning
+  provisioner "file" {
+    source      = "${var.install_script_src_path}"
+    destination = "${var.install_script_dest_path}"
 
-variable "zone" {}
+    connection {
+      type        = "ssh"
+      user        = "${var.ssh_user}"
+      private_key = "${file("${var.private_key_path}")}"
+      agent       = false
+    }
+  }
 
-variable "ssh_user" {}
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "${var.ssh_user}"
+      private_key = "${file("${var.private_key_path}")}"
+      agent       = false
+    }
 
-variable "public_key_path" {}
-
-variable "private_key_path" {}
-
-variable "vault_ip" {
-  default = ""
-}
-
-variable "vault_int_dns" {
-  default = ""
-}
-
-variable "vault_ext_dns" {
-  default = ""
-}
-
-variable "use_ignition" {
-  default     = false
-}
-
-variable "install_script_src_path" {
-  description = "Path to install script within this repository"
-  default     = "./scripts/install.sh"
-}
-
-variable "install_script_dest_path" {
-  description = "Path to put the install script on each destination resource"
-  default     = "/tmp/install.sh"
+    inline = [
+      "chmod +x ${var.install_script_dest_path}",
+      "sudo ${var.install_script_dest_path} ${count.index} ${var.vault_ip} ${var.vault_int_dns} ${var.vault_ext_dns}",
+    ]
+  }
 }
