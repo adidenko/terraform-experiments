@@ -24,7 +24,6 @@ module "data" {
   project                 = "${var.project}"
   ssh_user                = "${var.ssh_user}"
   public_key_path         = "${var.public_key_path}"
-  private_key_path        = "${var.private_key_path}"
 }
 
 output "vault_int_ip" {
